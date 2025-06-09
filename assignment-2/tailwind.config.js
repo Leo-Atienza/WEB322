@@ -1,16 +1,10 @@
-/** @type {import('tailwindcss').Config} */
-
 module.exports = {
-  content: [
-    "./views/**/*.html",
-    "./public/**/*.html"
-  ],
-  theme: { extend: {} },
+  content: ["./views/**/*.html"],
   plugins: [
-    require("@tailwindcss/typography"),
-    require("daisyui")
+    require('@tailwindcss/typography'),
+    require('daisyui')
   ],
   daisyui: {
-    themes: ["dim", "cupcake"]  // pick your favorite
+    themes: ['cupcake']    // you may choose a different built-in theme
   }
-};
+}

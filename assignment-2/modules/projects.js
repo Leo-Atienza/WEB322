@@ -1,4 +1,4 @@
-//  Variables that like point to the Project and Sector files 
+//  Variables that point to the Project and Sector files 
 const projectData = require("../data/projectData");  
 const sectorData  = require("../data/sectorData");   
 
@@ -9,13 +9,11 @@ let projects = [];
 function initialize() {
   return new Promise((resolve, reject) => { 
     try {
-      
       //  For easier trouble shooting
-      if(!Array.isArray(projectData) || projectData.length === 0) {
+      if (!Array.isArray(projectData) || projectData.length === 0) {
         return reject("Error: projectData is causing issues. Recheck file.");
       }
-
-      if(!Array.isArray(sectorData) || sectorData.length === 0) {
+      if (!Array.isArray(sectorData) || sectorData.length === 0) {
         return reject("Error: sectorData is causing issues. Recheck file.");
       }
 
@@ -23,30 +21,41 @@ function initialize() {
 
       projectData.forEach(Project => {
         const sectorRecord = sectorData.find(record => record.id === Project.sector_id);
-        
-        projects.push({...Project, sector: sectorRecord ? sectorRecord.sector_name : "Unknown"});
+        projects.push({
+          ...Project,
+          sector: sectorRecord ? sectorRecord.sector_name : "Unknown"
+        });
       });
       
-      //  Made to be an indicator 
       console.log("===========================================");
       console.log(`\n✅ Initialized ${projects.length} projects\n`);
-
       resolve();  
-    } catch (error) {
+    } 
+    catch (error) {
       reject("Error: Unable to initialize projects: " + error);
     }
   });
 }
 
-//  Function 2: getAllProjects()
-function getAllProjects() {
+//  Function 2: getAllProjects() — now accepts an optional `sector` filter
+function getAllProjects(sector) {
   return new Promise((resolve, reject) => {
-    if (projects.length > 0) {
-      resolve(projects);  
+    if (projects.length === 0) {
+      return reject("Error: No Projects Found");
     }
-    else {
-      reject("Error: No Projects Found")
+
+    // if a sector query string was provided, filter down
+    if (sector) {
+      const filtered = projects.filter(p =>
+        p.sector.toLowerCase().includes(sector.toLowerCase())
+      );
+      return filtered.length > 0
+        ? resolve(filtered)
+        : reject("Error: No Projects Found: " + sector);
     }
+
+    // otherwise return everything
+    resolve(projects);
   });
 }
 
@@ -54,11 +63,9 @@ function getAllProjects() {
 function getProjectById(id) {
   return new Promise((resolve, reject) => {
     const found = projects.find(p => p.id === id);
-    if (found) {
-      resolve(found); 
-    } else {
-      reject("Error: No Projects Found: " + id);
-    }
+    found
+      ? resolve(found)
+      : reject("Error: No Projects Found: " + id);
   });
 }
 
@@ -68,11 +75,9 @@ function getProjectsBySector(sector) {
     const filtered = projects.filter(p =>
       p.sector.toLowerCase().includes(sector.toLowerCase())
     );
-    if (filtered.length > 0) {
-      resolve(filtered);  
-    } else {
-      reject("Error: No Projects Found: " + sector);
-    }
+    filtered.length > 0
+      ? resolve(filtered)
+      : reject("Error: No Projects Found: " + sector);
   });
 }
 
