@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page Not Found</title>
-  <link href="/css/main.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>404 | Climate Solutions</title>
+  <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- Navbar (same as home) -->
-  <nav class="navbar bg-base-100">
-    <!-- … -->
+  <!-- Navbar (navbar-end for right alignment) -->
+  <nav class="navbar bg-base-100 px-6">
+    <div class="flex-1">
+      <a href="/" class="btn btn-ghost normal-case text-xl">Climate Solutions</a>
+    </div>
+    <div class="navbar-end hidden sm:flex">
+      <ul class="menu menu-horizontal px-4 space-x-6">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li>
+          <details class="dropdown dropdown-end">
+            <summary class="btn btn-ghost normal-case">Sector</summary>
+            <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+              <li><a href="/solutions/projects?sector=land%20sinks">Land Sinks</a></li>
+              <li><a href="/solutions/projects?sector=industry">Industry</a></li>
+              <li><a href="/solutions/projects?sector=transportation">Transportation</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
   </nav>
 
   <main class="container mx-auto p-4">
+    <!-- 404 Hero -->
     <div class="hero min-h-60 bg-base-200 rounded-box text-center">
       <div class="hero-content">
         <div>

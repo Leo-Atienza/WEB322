@@ -1,3 +1,5 @@
+//  projects.js
+
 //  Variables that point to the Project and Sector files 
 const projectData = require("../data/projectData");  
 const sectorData  = require("../data/sectorData");   

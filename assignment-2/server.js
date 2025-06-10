@@ -9,12 +9,16 @@
 *  Published URL: [Your Vercel URL]
 ********************************************************************************/
 
-const express     = require("express");
+const express = require("express");
 const projectData = require("./modules/projects");
-const path        = require("path");
+const path = require("path");
 
-const app        = express();
-const HTTP_PORT  = process.env.PORT || 8080;
+const app = express();
+
+//  For automatic pretty-print 
+app.set('json spaces', 2);
+
+const HTTP_PORT = process.env.PORT || 8080;
 
 // Serve static files from "public"
 app.use(express.static("public"));
@@ -57,7 +61,7 @@ app.get("/solutions/projects/:id", (req, res) => {
     .catch(err => res.status(404).send(err));
 });
 
-// Custom 404 page for all other routes
+// 404 page
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
 });
