@@ -1,3 +1,4 @@
+<!--home.html-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,28 +8,29 @@
   <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- Navbar (aligned end) -->
-  <nav class="navbar bg-base-100 px-6">
-    <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">Climate Solutions</a>
-    </div>
-    <div class="navbar-end hidden sm:flex">
-      <ul class="menu menu-horizontal px-4 space-x-6">
-        <li><a href="/" class="active">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li>
-          <details class="dropdown dropdown-end">
-            <summary class="btn btn-ghost normal-case">Sector</summary>
-            <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
-              <li><a href="/solutions/projects?sector=land%20sinks">Land Sinks</a></li>
-              <li><a href="/solutions/projects?sector=industry">Industry</a></li>
-              <li><a href="/solutions/projects?sector=transportation">Transportation</a></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </nav>
+
+  <!-- Navbar -->
+<nav class="navbar bg-base-100 px-6">
+  <div class="flex-1">
+    <a href="/" class="btn btn-ghost normal-case text-xl">Climate Solutions</a>
+  </div>
+  <div class="navbar-center hidden sm:flex">
+    <ul class="menu menu-horizontal px-4 space-x-6">
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li>
+        <details class="dropdown dropdown-end">
+          <summary class="btn btn-ghost normal-case">Sector</summary>
+          <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-auto">
+            <li><a href="/projects/sector/land-sinks">Land Sinks</a></li>
+            <li><a href="/projects/sector/industry">Industry</a></li>
+            <li><a href="/projects/sector/transportation">Transportation</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
+</nav>
 
   <!-- Hero -->
   <section class="hero bg-base-200 py-10">
@@ -36,9 +38,9 @@
       <div class="max-w-md">
         <h1 class="text-5xl font-bold">Climate Solutions</h1>
         <p class="py-6">
-          Climate Solutions is an aggregator site offering resources for climate mitigation and adaptation.
+          Discover a meticulously selected group of projects devoted to climate adaptation and mitigation.
         </p>
-        <a href="/solutions/projects" class="btn btn-primary">Explore Projects</a>
+        <a href="/projects" class="btn btn-primary">Explore Projects</a>
       </div>
     </div>
   </section>
@@ -46,7 +48,7 @@
   <!-- Projects Grid -->
   <main class="container mx-auto p-4">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Card 1: Abandoned Farmland Restoration -->
+      <!-- Card 1 -->
       <div class="card bg-base-100 shadow-xl">
         <figure>
           <img
@@ -61,12 +63,12 @@
             Restoration can bring degraded farmland back into productivity and sequester carbon in the process.
           </p>
           <div class="card-actions">
-            <a href="/solutions/projects/1" class="btn btn-outline">Learn More</a>
+            <a href="/projects/1" class="btn btn-outline">Learn More</a>
           </div>
         </div>
       </div>
 
-      <!-- Card 2: Alternative Cement -->
+      <!-- Card 2 -->
       <div class="card bg-base-100 shadow-xl">
         <figure>
           <img
@@ -81,12 +83,12 @@
             Conventional cement production is a significant source of carbon dioxide; reformulation can reduce emissions by millions of metric tons each year.
           </p>
           <div class="card-actions">
-            <a href="/solutions/projects/2" class="btn btn-outline">Learn More</a>
+            <a href="/projects/2" class="btn btn-outline">Learn More</a>
           </div>
         </div>
       </div>
 
-      <!-- Card 3: Bicycle Infrastructure -->
+      <!-- Card 3 -->
       <div class="card bg-base-100 shadow-xl">
         <figure>
           <img
@@ -101,7 +103,7 @@
             Infrastructure is essential for supporting safe and efficient cycling, reducing the need for fossil-fuel-dependent transportation.
           </p>
           <div class="card-actions">
-            <a href="/solutions/projects/3" class="btn btn-outline">Learn More</a>
+            <a href="/projects/3" class="btn btn-outline">Learn More</a>
           </div>
         </div>
       </div>

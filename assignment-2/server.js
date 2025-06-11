@@ -21,7 +21,8 @@ app.set('json spaces', 2);
 const HTTP_PORT = process.env.PORT || 8080;
 
 // Serve static files from "public"
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static("public"));
 
 projectData.initialize()
   .then(() => {
@@ -45,7 +46,7 @@ app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "about.html"));
 });
 
-// Projects endpoint (with optional sector filter)
+// Projects endpoint 
 app.get("/solutions/projects", (req, res) => {
   const { sector } = req.query;
   projectData.getAllProjects(sector)
@@ -59,6 +60,36 @@ app.get("/solutions/projects/:id", (req, res) => {
   projectData.getProjectById(id)
     .then(project => res.json(project))
     .catch(err => res.status(404).send(err));
+});
+
+// Pages for other links
+
+// Projects overview
+app.get("/projects", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "projects.html"));
+});
+
+// Sector pages (land-sinks, industry, transportation)
+app.get("/projects/sector/:sector", (req, res, next) => {
+  const fileMap = {
+    "land-sinks":     "land-sinks.html",
+    "industry":       "industry.html",
+    "transportation": "transport.html"
+  };
+  const viewFile = fileMap[req.params.sector];
+  if (viewFile) {
+    return res.sendFile(path.join(__dirname, "views", viewFile));
+  }
+  next(); //  Will go to 404
+});
+
+//  Abandoned Farmland Restoration, Alternative Cement, Bicycle Infrastructure
+app.get("/projects/:id", (req, res, next) => {
+  const id = req.params.id;
+  if (["1", "2", "3"].includes(id)) {
+    return res.sendFile(path.join(__dirname, "views", `project-${id}.html`));
+  }
+  next(); //  Will go to 404
 });
 
 // 404 page
