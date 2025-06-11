@@ -1,0 +1,12 @@
+# dependencies
+/node_modules/
+
+# environment variables
+.env
+
+# OS or editor metadata
+.DS_Store
+*.log
+
+# (optional) built CSS if you prefer to rebuild on deploy
+/public/css/main.css
