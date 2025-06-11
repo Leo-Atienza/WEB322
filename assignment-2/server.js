@@ -6,7 +6,7 @@
 *  https://www.senecacollege.ca/about/policies/academic-integrity-policy.html
 * 
 *  Name: Leo Atienza    Student ID: 121941249    Date: 2025-06-08
-*  Published URL: [Your Vercel URL]
+*  Published URL: https://web-322-pearl.vercel.app/ or https://vercel.com/leo-atienzas-projects/web-322
 ********************************************************************************/
 
 const express = require("express");
