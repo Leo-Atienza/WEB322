@@ -4,27 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects | Climate Solutions</title>
-  <link href="/css/main.css " rel="stylesheet" />
+  <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
+
   <%- include('partials/navbar', { page: '/solutions/projects' }) %>
 
-<section class="hero bg-base-200 py-12">
-  <div class="hero-content flex flex-col items-center text-center space-y-6">
-
-    <div>
-      <h1 class="text-4xl font-bold">Climate Solutions</h1>
-      <p>Discover a meticulously selected group of projects devoted to climate adaptation and mitigation.</p>
+  <!-- Hero + Sector Filters -->
+  <section class="hero bg-base-200 py-12">
+    <div class="hero-content flex flex-col items-center text-center space-y-6">
+      <div>
+        <h1 class="text-4xl font-bold">Climate Solutions</h1>
+        <p>Discover a meticulously selected group of projects devoted to climate adaptation and mitigation.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/solutions/projects" class="btn <%= !sector ? 'btn-primary' : 'btn-outline' %>">All</a>
+        <a href="/solutions/projects?sector=Transportation" class="btn <%= sector==='Transportation' ? 'btn-primary' : 'btn-outline' %>">Transportation</a>
+        <a href="/solutions/projects?sector=Industry" class="btn <%= sector==='Industry' ? 'btn-primary' : 'btn-outline' %>">Industry</a>
+        <a href="/solutions/projects?sector=Land%20Sinks" class="btn <%= sector==='Land Sinks' ? 'btn-primary' : 'btn-outline' %>">Land Sinks</a>
+      </div>
     </div>
-
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="/solutions/projects" class="btn <%= !sector ? 'btn-primary' : 'btn-outline' %>">All</a>
-      <a href="/solutions/projects?sector=Transportation" class="btn <%= sector==='Transportation' ? 'btn-primary' : 'btn-outline' %>">Transportation</a>
-      <a href="/solutions/projects?sector=Industry" class="btn <%= sector==='Industry' ? 'btn-primary' : 'btn-outline' %>">Industry</a>
-      <a href="/solutions/projects?sector=Land%20Sinks" class="btn <%= sector==='Land Sinks' ? 'btn-primary' : 'btn-outline' %>">Land Sinks</a>
-    </div>
-  </div>
-</section>
+  </section>
 
   <!-- Projects List -->
   <main class="container mx-auto py-8 px-4">
@@ -38,11 +38,12 @@
         </tr>
       </thead>
       <tbody>
+
         <% projects.forEach(p => { %>
           <tr class="even:bg-base-100 odd:bg-base-200">
             <td class="border px-4 py-2"><%= p.title %></td>
             <td class="border px-4 py-2">
-              <a href="/solutions/projects?sector=<%= p.sector %>"><%= p.sector %></a>
+              <a href="/solutions/projects?sector=<%= encodeURIComponent(p.sector) %>"><%= p.sector %></a>
             </td>
             <td class="border px-4 py-2"><%= p.summary_short %></td>
             <td class="border px-4 py-2">
@@ -50,6 +51,7 @@
             </td>
           </tr>
         <% }); %>
+
       </tbody>
     </table>
   </main>

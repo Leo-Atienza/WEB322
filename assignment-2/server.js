@@ -15,12 +15,12 @@ const path = require("path");
 
 const app = express();
 
-// For automatic pretty-print
+//  For automatic pretty-print 
 app.set('json spaces', 2);
 
 // EJS setup
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', __dirname + '/views');
 
 const HTTP_PORT = process.env.PORT || 8080;
 
@@ -79,36 +79,23 @@ app.get("/solutions/projects/:id", (req, res) => {
     });
 });
 
+// Static sector pages
+app.get("/land-sinks",  (req, res) => res.render("land-sinks",  { page: "/land-sinks" }));
+app.get("/industry",    (req, res) => res.render("industry",    { page: "/industry"   }));
+app.get("/transport",   (req, res) => res.render("transport",   { page: "/transport"  }));
+
 // Projects overview (static)
 app.get("/projects", (req, res) => {
-  //res.sendFile(path.join(__dirname, "views", "projects.html"));
   res.render("projects", { page: "/projects" });
 });
 
-// Sector pages (land-sinks, industry, transportation)
-app.get("/projects/sector/:sector", (req, res, next) => {
-  const fileMap = {
-    "land-sinks":     "land-sinks",
-    "industry":       "industry",
-    "transportation": "transport"
-  };
-  const viewFile = fileMap[req.params.sector];
-  if (viewFile) {
-    //res.sendFile(path.join(__dirname, "views", `${viewFile}.html`));
-    return res.render(viewFile, { page: `/projects/sector/${req.params.sector}` });
-  }
-  next(); // Will go to 404
-});
-
 // Individual static project pages
-// Abandoned Farmland Restoration (1), Alternative Cement (2), Bicycle Infrastructure (3)
 app.get("/projects/:id", (req, res, next) => {
   const id = req.params.id;
   if (["1", "2", "3"].includes(id)) {
-    //return res.sendFile(path.join(__dirname, "views", `project-${id}.html`));
     return res.render(`project-${id}`, { page: `/projects/${id}` });
   }
-  next(); // Will go to 404
+  next();
 });
 
 // 404 handler for everything else
