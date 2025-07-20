@@ -1,6 +1,6 @@
-// modules/projects.js
+// projects.js
 
-// ─── Load environment, Postgres driver & Sequelize ──────────
+// Load environment, Postgres driver and Sequelize
 require('dotenv').config();
 require('pg');
 require('pg-hstore');
@@ -20,7 +20,7 @@ const sequelize = new Sequelize(
   }
 );
 
-// ─── Define Models & Association ────────────────────────────
+// Define Models & Association
 const Sector = sequelize.define('Sector', {
   id:          { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   sector_name: { type: DataTypes.STRING,  allowNull: false }
@@ -45,7 +45,7 @@ const Project = sequelize.define('Project', {
 
 Project.belongsTo(Sector, { foreignKey: 'sector_id' });
 
-// ─── Data‐access functions ──────────────────────────────────
+// Data access functions
 
 function initialize() {
   return sequelize.sync();

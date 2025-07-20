@@ -6,7 +6,7 @@
 *  https://www.senecacollege.ca/about/policies/academic-integrity-policy.html
 * 
 *  Name: Leo Atienza    Student ID: 121941249    Date: 2025-07-18
-*  Published URL: https://web-322-pearl.vercel.app/ or https://vercel.com/leo-atienzas-projects/web-322
+*  Published URL: https://vercel.com/leo-atienzas-projects/web-322
 ********************************************************************************/
 
 const express = require("express");
@@ -25,10 +25,10 @@ app.set('views', __dirname + '/views');
 // Serve static files from "public"
 app.use(express.static(path.join(__dirname, "public")));
 
-// ─── Parse URL-encoded form data (for POST submissions) ──────────
+// Parse URL-encoded form data (for POST submissions) 
 app.use(express.urlencoded({ extended: true }));
 
-// ─── Initialize database & start server ─────────────────────────
+// Initialize database and start server
 const HTTP_PORT = process.env.PORT || 8080;
 projectData.initialize()
   .then(() => {
@@ -42,7 +42,7 @@ projectData.initialize()
     console.error("Initialization failed: " + err);
   });
 
-// ─── Routes ────────────────────────────────────────────────────
+// Routes 
 
 // Home page
 app.get("/", (req, res) => {
@@ -84,7 +84,7 @@ app.get("/solutions/projects/:id", (req, res) => {
     });
 });
 
-// ─── Add Project Routes ────────────────────────────────────────
+// Add Project 
 
 // GET /solutions/addProject – render the form
 app.get("/solutions/addProject", (req, res) => {
@@ -115,7 +115,7 @@ app.post("/solutions/addProject", (req, res) => {
     });
 });
 
-// ─── Edit Project Routes ───────────────────────────────────────
+// Edit Project
 
 // GET /solutions/editProject/:id – render the edit form
 app.get("/solutions/editProject/:id", (req, res) => {
@@ -128,7 +128,7 @@ app.get("/solutions/editProject/:id", (req, res) => {
     res.render("editProject", {
       project,
       sectors,
-      page: ""    // no navbar highlight
+      page: ""
     });
   })
   .catch(err => {
@@ -139,7 +139,7 @@ app.get("/solutions/editProject/:id", (req, res) => {
   });
 });
 
-// POST /solutions/editProject – process update
+// process update
 app.post("/solutions/editProject", (req, res) => {
   const id = parseInt(req.body.id, 10);
   projectData.editProject(id, req.body)
@@ -153,9 +153,9 @@ app.post("/solutions/editProject", (req, res) => {
     });
 });
 
-// ─── Delete Project Route ──────────────────────────────────────
+// Delete Project 
 
-// GET /solutions/deleteProject/:id – delete and redirect
+// delete and redirect
 app.get("/solutions/deleteProject/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
   projectData.deleteProject(id)
@@ -169,17 +169,17 @@ app.get("/solutions/deleteProject/:id", (req, res) => {
     });
 });
 
-// Static sector pages
+// Sector pages
 app.get("/land-sinks",  (req, res) => res.render("land-sinks",  { page: "/land-sinks" }));
 app.get("/industry",    (req, res) => res.render("industry",    { page: "/industry"   }));
 app.get("/transport",   (req, res) => res.render("transport",   { page: "/transport"  }));
 
-// Projects overview (static)
+// Projects overview 
 app.get("/projects", (req, res) => {
   res.render("projects", { page: "/projects" });
 });
 
-// Individual static project pages
+// Project pages
 app.get("/projects/:id", (req, res, next) => {
   const id = req.params.id;
   if (["1", "2", "3"].includes(id)) {
@@ -188,7 +188,7 @@ app.get("/projects/:id", (req, res, next) => {
   next();
 });
 
-// 404 handler for everything else
+// 404 
 app.use((req, res) => {
   res.status(404).render("404", {
     message: "Page not found",
