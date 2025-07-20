@@ -1,0 +1,139 @@
+<!--addProject.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Project | Climate Solutions</title>
+  <link href="/css/main.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navbar -->
+  <%- include('partials/navbar', { page: '/solutions/addProject' }) %>
+
+  <!-- Page Header -->
+  <section class="hero bg-base-200 py-12">
+    <div class="hero-content text-center">
+      <h1 class="text-4xl font-bold">Add Project</h1>
+    </div>
+  </section>
+
+  <!-- Add Project Form -->
+  <main class="container mx-auto p-4">
+    <form action="/solutions/addProject" method="POST" class="space-y-6">
+
+      <!-- Title -->
+      <div class="form-control">
+        <label class="label" for="title">
+          <span class="label-text">Title</span>
+        </label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          required
+          class="input input-bordered w-full"
+        />
+      </div>
+
+      <!-- Feature Image URL -->
+      <div class="form-control">
+        <label class="label" for="feature_img_url">
+          <span class="label-text">Feature Image URL</span>
+        </label>
+        <input
+          id="feature_img_url"
+          name="feature_img_url"
+          type="url"
+          required
+          class="input input-bordered w-full"
+        />
+      </div>
+
+      <!-- Sector -->
+      <div class="form-control">
+        <label class="label" for="sector_id">
+          <span class="label-text">Sector</span>
+        </label>
+        <select
+          id="sector_id"
+          name="sector_id"
+          required
+          class="select select-bordered w-full"
+        >
+          <option value="" disabled selected>Select a sector</option>
+          <% sectors.forEach(sector => { %>
+            <option value="<%= sector.id %>">
+              <%= sector.sector_name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- Intro Short -->
+      <div class="form-control">
+        <label class="label" for="intro_short">
+          <span class="label-text">Introduction (short)</span>
+        </label>
+        <textarea
+          id="intro_short"
+          name="intro_short"
+          required
+          class="textarea textarea-bordered w-full"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Summary Short -->
+      <div class="form-control">
+        <label class="label" for="summary_short">
+          <span class="label-text">Summary (short)</span>
+        </label>
+        <textarea
+          id="summary_short"
+          name="summary_short"
+          required
+          class="textarea textarea-bordered w-full"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Impact -->
+      <div class="form-control">
+        <label class="label" for="impact">
+          <span class="label-text">Impact</span>
+        </label>
+        <textarea
+          id="impact"
+          name="impact"
+          required
+          class="textarea textarea-bordered w-full"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <!-- Original Source URL -->
+      <div class="form-control">
+        <label class="label" for="original_source_url">
+          <span class="label-text">Original Source URL</span>
+        </label>
+        <input
+          id="original_source_url"
+          name="original_source_url"
+          type="url"
+          required
+          class="input input-bordered w-full"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-control">
+        <button type="submit" class="btn btn-primary w-full">
+          Add Project
+        </button>
+      </div>
+
+    </form>
+  </main>
+</body>
+</html>

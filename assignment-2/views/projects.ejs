@@ -44,6 +44,7 @@
             <td class="border px-4 py-2"><%= p.title %></td>
             <td class="border px-4 py-2">
               <a href="/solutions/projects?sector=<%= encodeURIComponent(p.sector) %>"><%= p.sector %></a>
+              <a href="/solutions/projects?sector=<%= encodeURIComponent(p.Sector.sector_name) %>"><%= p.Sector.sector_name %></a>
             </td>
             <td class="border px-4 py-2"><%= p.summary_short %></td>
             <td class="border px-4 py-2">

@@ -1,11 +1,11 @@
 /********************************************************************************
-*  WEB322 – Assignment 04
+*  WEB322 – Assignment 05
 * 
 *  I declare that this assignment is my own work in accordance with Seneca's
 *  Academic Integrity Policy:
 *  https://www.senecacollege.ca/about/policies/academic-integrity-policy.html
 * 
-*  Name: Leo Atienza    Student ID: 121941249    Date: 2025-07-03
+*  Name: Leo Atienza    Student ID: 121941249    Date: 2025-07-18
 *  Published URL: https://web-322-pearl.vercel.app/ or https://vercel.com/leo-atienzas-projects/web-322
 ********************************************************************************/
 
@@ -15,18 +15,21 @@ const path = require("path");
 
 const app = express();
 
-//  For automatic pretty-print 
+// For automatic pretty-print
 app.set('json spaces', 2);
 
 // EJS setup
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
-const HTTP_PORT = process.env.PORT || 8080;
-
 // Serve static files from "public"
 app.use(express.static(path.join(__dirname, "public")));
 
+// ─── Parse URL-encoded form data (for POST submissions) ──────────
+app.use(express.urlencoded({ extended: true }));
+
+// ─── Initialize database & start server ─────────────────────────
+const HTTP_PORT = process.env.PORT || 8080;
 projectData.initialize()
   .then(() => {
     app.listen(HTTP_PORT, () => {
@@ -39,6 +42,8 @@ projectData.initialize()
     console.error("Initialization failed: " + err);
   });
 
+// ─── Routes ────────────────────────────────────────────────────
+
 // Home page
 app.get("/", (req, res) => {
   res.render("home", { page: "/" });
@@ -49,12 +54,12 @@ app.get("/about", (req, res) => {
   res.render("about", { page: "/about" });
 });
 
-// Part 3: List all projects (renders projects.ejs)
+// List all projects (renders projects.ejs)
 app.get("/solutions/projects", (req, res) => {
   const { sector } = req.query;
   projectData.getAllProjects(sector)
     .then(projects => {
-      res.render("projects", { projects, sector });
+      res.render("projects", { projects, sector, page: "/solutions/projects" });
     })
     .catch(err => {
       res.status(404).render("404", {
@@ -64,17 +69,102 @@ app.get("/solutions/projects", (req, res) => {
     });
 });
 
-// Part 4: Single project by ID (renders project.ejs)
+// Single project by ID (renders project.ejs)
 app.get("/solutions/projects/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
   projectData.getProjectById(id)
     .then(project => {
-      res.render("project", { project });
+      res.render("project", { project, page: `/solutions/projects/${id}` });
     })
     .catch(err => {
       res.status(404).render("404", {
         message: err,
-        page: "/solutions/projects"
+        page: `/solutions/projects/${id}`
+      });
+    });
+});
+
+// ─── Add Project Routes ────────────────────────────────────────
+
+// GET /solutions/addProject – render the form
+app.get("/solutions/addProject", (req, res) => {
+  projectData.getAllSectors()
+    .then(sectors => {
+      res.render("addProject", {
+        sectors,
+        page: "/solutions/addProject"
+      });
+    })
+    .catch(err => {
+      res.status(500).render("500", {
+        message: `Unable to load form: ${err}`
+      });
+    });
+});
+
+// POST /solutions/addProject – process submission
+app.post("/solutions/addProject", (req, res) => {
+  projectData.addProject(req.body)
+    .then(() => {
+      res.redirect("/solutions/projects");
+    })
+    .catch(err => {
+      res.render("500", {
+        message: `Error adding project: ${err}`
+      });
+    });
+});
+
+// ─── Edit Project Routes ───────────────────────────────────────
+
+// GET /solutions/editProject/:id – render the edit form
+app.get("/solutions/editProject/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  Promise.all([
+    projectData.getProjectById(id),
+    projectData.getAllSectors()
+  ])
+  .then(([project, sectors]) => {
+    res.render("editProject", {
+      project,
+      sectors,
+      page: ""    // no navbar highlight
+    });
+  })
+  .catch(err => {
+    res.status(404).render("404", {
+      message: err,
+      page: `/solutions/editProject/${id}`
+    });
+  });
+});
+
+// POST /solutions/editProject – process update
+app.post("/solutions/editProject", (req, res) => {
+  const id = parseInt(req.body.id, 10);
+  projectData.editProject(id, req.body)
+    .then(() => {
+      res.redirect("/solutions/projects");
+    })
+    .catch(err => {
+      res.render("500", {
+        message: `Error updating project: ${err}`
+      });
+    });
+});
+
+// ─── Delete Project Route ──────────────────────────────────────
+
+// GET /solutions/deleteProject/:id – delete and redirect
+app.get("/solutions/deleteProject/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  projectData.deleteProject(id)
+    .then(() => {
+      res.redirect("/solutions/projects");
+    })
+    .catch(err => {
+      res.render("500", {
+        message: `Error deleting project: ${err}`
       });
     });
 });
