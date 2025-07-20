@@ -1,7 +1,9 @@
 // modules/projects.js
 
-// ─── Load environment & Sequelize ───────────────────────────
+// ─── Load environment, Postgres driver & Sequelize ──────────
 require('dotenv').config();
+require('pg');
+require('pg-hstore');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 
 const sequelize = new Sequelize(
@@ -45,16 +47,10 @@ Project.belongsTo(Sector, { foreignKey: 'sector_id' });
 
 // ─── Data‐access functions ──────────────────────────────────
 
-/**
- * Initialize the database (creates tables if they don't exist)
- */
 function initialize() {
   return sequelize.sync();
 }
 
-/**
- * Get all projects, optionally filtered by sector name substring
- */
 function getAllProjects(sector) {
   return Project.findAll({ include: [ Sector ] })
     .then(results => {
@@ -67,9 +63,6 @@ function getAllProjects(sector) {
     });
 }
 
-/**
- * Get one project by its ID
- */
 function getProjectById(id) {
   return Project.findAll({
     where: { id },
@@ -81,9 +74,6 @@ function getProjectById(id) {
   });
 }
 
-/**
- * Get projects whose sector_name contains the given substring
- */
 function getProjectsBySector(sector) {
   return Project.findAll({
     include: [ Sector ],
@@ -99,17 +89,10 @@ function getProjectsBySector(sector) {
   });
 }
 
-/**
- * Return all sectors (for populating the Add/Edit form)
- */
 function getAllSectors() {
   return Sector.findAll();
 }
 
-/**
- * Add a new project
- * Resolves with no data on success, or rejects with the first validation error message.
- */
 function addProject(projectData) {
   return Project.create(projectData)
     .then(() => {})
@@ -121,10 +104,6 @@ function addProject(projectData) {
     });
 }
 
-/**
- * Edit an existing project
- * Resolves with no data on success, or rejects with the first validation error message.
- */
 function editProject(id, projectData) {
   return Project.update(projectData, { where: { id } })
     .then(([rowsUpdated]) => {
@@ -139,10 +118,6 @@ function editProject(id, projectData) {
     });
 }
 
-/**
- * Delete a project by ID
- * Resolves with no data on success, or rejects with an error message.
- */
 function deleteProject(id) {
   return Project.destroy({ where: { id } })
     .then(rowsDeleted => {
