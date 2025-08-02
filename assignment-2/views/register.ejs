@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | Climate Solutions</title>
+  <link href="/css/main.css" rel="stylesheet" />
+</head>
+<body>
+<%- include('partials/navbar',{ page:'/register' }) %>
+<div class="flex justify-center items-center min-h-screen bg-base-200">
+  <div class="w-full max-w-md">
+    <form action="/register" method="POST" class="card bg-base-100 shadow-lg p-8">
+      <h2 class="text-3xl font-bold mb-6 text-center">Register</h2>
+      <% if (errorMessage) { %>
+        <div class="alert alert-error mb-4"><%=errorMessage%></div>
+      <% } %>
+      <% if (successMessage) { %>
+        <div class="alert alert-success mb-4"><%=successMessage%></div>
+      <% } %>
+      <div class="form-control mb-4">
+        <label class="label"><span class="label-text">Username</span></label>
+        <input type="text" name="userName" value="<%=userName%>" class="input input-bordered" required/>
+      </div>
+      <div class="form-control mb-4">
+        <label class="label"><span class="label-text">Password</span></label>
+        <input type="password" name="password" class="input input-bordered" required/>
+      </div>
+      <div class="form-control mb-4">
+        <label class="label"><span class="label-text">Confirm Password</span></label>
+        <input type="password" name="password2" class="input input-bordered" required/>
+      </div>
+      <div class="form-control mb-6">
+        <label class="label"><span class="label-text">Email</span></label>
+        <input type="email" name="email" class="input input-bordered" required/>
+      </div>
+      <button type="submit" class="btn btn-primary w-full">Register</button>
+      <div class="mt-4 text-center">
+        <span class="opacity-70">Already have an account?</span>
+        <a href="/login" class="link ml-2">Login</a>
+      </div>
+    </form>
+  </div>
+</div>

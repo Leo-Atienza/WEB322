@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | Climate Solutions</title>
+  <link href="/css/main.css" rel="stylesheet" />
+</head>
+<body>
+<%- include('partials/navbar',{ page:'/userHistory' }) %>
+<div class="flex justify-center items-center min-h-screen bg-base-200">
+  <div class="w-full max-w-2xl">
+    <div class="card bg-base-100 shadow-lg p-8">
+      <h2 class="text-3xl font-bold mb-6 text-center">Login History for <span class="text-primary"><%=userName%></span></h2>
+      <div class="overflow-x-auto">
+        <table class="table w-full table-zebra">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date & Time</th>
+              <th>User Agent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% loginHistory.forEach((e,i)=>{ %>
+              <tr>
+                <td><%=i+1%></td>
+                <td><%=e.dateTime%></td>
+                <td class="break-all"><%=e.userAgent%></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-6 flex justify-between">
+        <a href="/solutions/projects" class="btn btn-secondary">Back to Projects</a>
+        <a href="/logout" class="btn btn-error">Log Out</a>
+      </div>
+    </div>
+  </div>
+</div>

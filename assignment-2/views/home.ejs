@@ -7,10 +7,7 @@
   <link href="/css/main.css" rel="stylesheet" />
 </head>
 <body>
-  <!-- Navbar -->
   <%- include('partials/navbar', { page: '/' }) %>
-
-  <!-- Hero / Explore Projects -->
   <section class="hero bg-base-200 py-12">
     <div class="hero-content flex flex-col items-center text-center space-y-6">
       <h1 class="text-4xl font-bold">Climate Solutions</h1>
@@ -20,60 +17,28 @@
       <a href="/solutions/projects" class="btn btn-primary">Explore Projects</a>
     </div>
   </section>
-
-  <!-- Featured Projects -->
   <main class="container mx-auto py-8 px-4">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Card 1: Abandoned Farmland Restoration -->
-      <div class="card bg-base-100 shadow-xl">
-        <figure>
-          <img
-            src="https://drawdown.org/sites/default/files/solutions/solution_farmlandrestoration01.jpg"
-            alt="Abandoned Farmland Restoration"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Abandoned Farmland Restoration</h2>
-          <p>Restoration can bring degraded farmland back into productivity and sequester carbon in the process.</p>
-          <div class="card-actions justify-end">
-            <a href="/solutions/projects/1" class="btn btn-outline">Learn More</a>
+      <% projects.forEach(p => { %>
+        <div class="card bg-base-100 shadow-xl">
+          <figure>
+            <img
+              src="<%= p.feature_img_url %>"
+              alt="<%= p.title %>"
+              class="w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title"><%= p.title %></h2>
+            <p><%= p.summary_short %></p>
+            <div class="card-actions justify-end">
+              <a href="/solutions/projects/<%= p.id %>" class="btn btn-outline">
+                Learn More
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Card 2: Alternative Cement -->
-      <div class="card bg-base-100 shadow-xl">
-        <figure>
-          <img
-            src="https://drawdown.org/sites/default/files/solutions2020/solution_alternativecement02.jpg"
-            alt="Alternative Cement"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Alternative Cement</h2>
-          <p>Conventional cement production is a significant source of carbon dioxide; reformulation can reduce emissions by millions of metric tons each year.</p>
-          <div class="card-actions justify-end">
-            <a href="/solutions/projects/2" class="btn btn-outline">Learn More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3: Bicycle Infrastructure -->
-      <div class="card bg-base-100 shadow-xl">
-        <figure>
-          <img
-            src="https://drawdown.org/sites/default/files/solutions2020/solution_bicycle_infrastructure.jpg"
-            alt="Bicycle Infrastructure"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Bicycle Infrastructure</h2>
-          <p>Infrastructure is essential for supporting safe and efficient cycling, reducing the need for fossil-fuel-dependent transportation.</p>
-          <div class="card-actions justify-end">
-            <a href="/solutions/projects/3" class="btn btn-outline">Learn More</a>
-          </div>
-        </div>
-      </div>
+      <% }) %>
     </div>
   </main>
 </body>
